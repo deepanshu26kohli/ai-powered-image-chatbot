@@ -67,18 +67,24 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-black flex items-center justify-center p-6">
-      <div className="w-full max-w-2xl bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-xl flex flex-col">
-        <h1 className="text-2xl font-bold text-center text-white mb-4">🤖 AI Powered Image Chatbot</h1>
-        <h5 className="text-md font-bold text-center text-white mb-4">Upload an image to get started. Then ask questions about it!</h5>
+    <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] flex items-center justify-center p-6 relative overflow-hidden">
+      
+      {/* Glass Glow Effect Background */}
+      <div className="absolute w-[500px] h-[500px] bg-gradient-to-r from-pink-500/40 to-purple-500/40 rounded-full blur-3xl opacity-30 top-10 left-10 animate-pulse"></div>
+      <div className="absolute w-[400px] h-[400px] bg-gradient-to-r from-blue-500/40 to-cyan-400/40 rounded-full blur-3xl opacity-20 bottom-10 right-10 animate-pulse"></div>
 
-        <Upload
-          beforeUpload={handleFileSelect}
-          showUploadList={false}
-        >
+      <div className="w-full max-w-2xl bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 shadow-2xl flex flex-col relative z-10">
+        <h1 className="text-3xl font-bold text-center text-white mb-2 drop-shadow-md">
+          🤖 AI Powered Image Chatbot
+        </h1>
+        <p className="text-sm text-center text-white/70 mb-6">
+          Upload an image to extract content and chat intelligently with its context.
+        </p>
+
+        <Upload beforeUpload={handleFileSelect} showUploadList={false}>
           <Button
             icon={<UploadOutlined />}
-            className="w-full mb-3 bg-white/20 hover:bg-white/30 text-white border-none flex items-center justify-center"
+            className="w-full mb-3 bg-white/20 hover:bg-white/30 text-white border-none flex items-center justify-center backdrop-blur-md rounded-xl transition-all duration-300"
           >
             Select Image
           </Button>
@@ -86,32 +92,41 @@ export default function Home() {
 
         {preview && (
           <div className="flex justify-center mb-4">
-            <img src={preview} alt="preview" className="max-h-48 rounded-xl border border-white/20 object-contain" />
+            <div className="relative group">
+              <img
+                src={preview}
+                alt="preview"
+                className="max-h-48 rounded-2xl border border-white/30 object-contain shadow-lg"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm transition-all">
+                Image Preview
+              </div>
+            </div>
           </div>
         )}
-       {
-        !!file && 
-       
-        <Button
-          type="primary"
-          onClick={handleUpload}
-          disabled={!file}
-          className="w-full mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold shadow-lg"
-        >
-          Extract & Analyze
-        </Button>
-}
-        <div className="flex-1 overflow-y-auto bg-white/5 rounded-xl p-4 mb-4 h-64 flex flex-col">
+
+        {!!file && (
+          <Button
+            type="primary"
+            onClick={handleUpload}
+            disabled={!file}
+            className="w-full mb-6 bg-gradient-to-r from-fuchsia-500 to-indigo-500 hover:from-fuchsia-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-lg transition-all duration-300"
+          >
+            Extract & Analyze
+          </Button>
+        )}
+
+        <div className="flex-1 overflow-y-auto bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-4 h-64 flex flex-col border border-white/20 shadow-inner">
           {chat.length === 0 && !loading && (
-            <p className="text-white/50 text-center">No conversation yet...</p>
+            <p className="text-white/50 text-center my-auto">No conversation yet...</p>
           )}
 
           {chat.map((msg, i) => (
             <div key={i} className={`mb-3 ${msg.role === "user" ? "text-right" : "text-left"}`}>
               <span
-                className={`inline-block px-4 py-2 rounded-xl max-w-xs break-words ${
+                className={`inline-block px-4 py-2 rounded-2xl max-w-xs break-words backdrop-blur-sm ${
                   msg.role === "user"
-                    ? "bg-purple-500/30 text-white"
+                    ? "bg-gradient-to-r from-purple-600/50 to-pink-500/50 text-white shadow-md"
                     : "bg-white/20 text-white"
                 }`}
               >
@@ -141,7 +156,7 @@ export default function Home() {
               className="text-white cursor-pointer hover:text-purple-300 transition-colors"
             />
           }
-          className="bg-white/10 text-white placeholder-white/60 border-none rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-400"
+          className="bg-white/20 text-white placeholder-white/60 border border-white/30 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-400 focus:outline-none backdrop-blur-md shadow-inner"
         />
       </div>
     </div>
